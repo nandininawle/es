@@ -1,0 +1,47 @@
+#include<reg51.h> // Include header file for 8051 microcontroller
+
+#define stp_port P1 // Define port for stepper motor control
+#define dly_cnt 10 // Define delay count for controlling stepper motor speed
+#define steps 512 // Define number of steps for stepper motor
+
+void delay(unsigned int time)
+{
+    unsigned int i,j;
+    // Nested loops to create delay
+    for(i=0; i<time; i++)
+        for(j=0; j<275; j++); // Adjust this value for desired delay
+}
+
+void main()
+{
+    unsigned int i;
+
+    while(1) // Infinite loop for continuous operation
+    {
+        // Forward rotation
+        for(i=0; i<steps; i++)
+        {
+            stp_port=0x03; // Step sequence for forward rotation
+            delay(dly_cnt);
+            stp_port=0x06;
+            delay(dly_cnt);
+            stp_port=0x0C;
+            delay(dly_cnt);
+            stp_port=0x09;
+            delay(dly_cnt);
+        }
+
+        // Backward rotation
+        for(i=0; i<steps; i++)
+        {
+            stp_port=0x09; // Step sequence for backward rotation
+            delay(dly_cnt);
+            stp_port=0x0C;
+            delay(dly_cnt);
+            stp_port=0x06;
+            delay(dly_cnt);
+            stp_port=0x03;
+            delay(dly_cnt);
+        }
+    }
+}
