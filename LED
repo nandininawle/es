@@ -1,0 +1,143 @@
+
+Pattern 1: 
+#include<reg51.h> 
+msdelay(unsigned int time) 
+{ 
+int i; 
+for(i=0;i<time;i++); 
+} 
+void main() 
+{ 
+int j; 
+while(1) 
+{ 
+//Using for loop Shifting PATTERN 1 
+for(j=0;j<4;j++) 
+{ 
+P1=0x80>>j | 0x01<<j; 
+msdelay(20000);
+} 
+for(j=1;j<4;j++) 
+{ 
+P1=0x10<<j | 0x08>>j; 
+msdelay(20000); 
+} 
+} 
+} 
+
+Pattern 2 
+#include <reg51.h> 
+void delay( int time) 
+{
+int i,j; 
+for(i=0;i<time;i++); for(j=0;j<250;j++); } 
+void main() 
+{ 
+while(1) 
+{ 
+P1=0xC3; 
+delay(10000); 
+P1=0x66; 
+delay(10000); 
+P1=0x3C; 
+delay(10000); 
+P1=0x66; 
+delay(10000); 
+P1=0xC3; 
+delay(10000); 
+} 
+}
+Pattern3: 
+#include <reg51.h> 
+void delay( int time) 
+{ 
+int i,j; 
+for(i=0;i<time;i++); 
+for(j=0;j<250;j++); 
+} 
+void main() 
+{ 
+while(1) 
+{ 
+P1=0xCC; 
+delay(10000); 
+P1=0x33; 
+delay(10000); 
+} 
+}
+
+Pattern4: 
+#include<reg51.h> 
+void delay(unsigned int time) { 
+int i; 
+for(i=0;i<time;i++); 
+} 
+void main() 
+{ 
+int j; 
+while(1) 
+{ 
+for(j=0;j<8;j++) 
+{ 
+P1=0x80>>j; 
+delay(100000); 
+} 
+} 
+}
+
+Pattern5: 
+#include <reg51.h> 
+void delay(unsigned int t) 
+{ 
+int i; 
+for(i=0;i<t;i++);
+} 
+void main() 
+{ 
+int j , k; 
+while(1) 
+{ 
+while(P1=0x07) 
+{ 
+P1=0xE0; 
+delay(500000); 
+for(j=0;j<5;j++) 
+{ 
+P1=P1>>1; 
+delay(500000); 
+} 
+P1=0x07; 
+delay(500000); 
+for(k=0;k<5;k++) 
+{ 
+P1=P1<<1; 
+delay(500000); 
+} 
+} 
+} 
+}
+Pattern6: 
+#include<reg51.h> 
+void delay(unsigned int time) // timer 
+{ 
+unsigned int i; 
+for( i=0;i<time;i++); 
+} 
+void main() 
+{ 
+unsigned int i; 
+while(1) 
+{ 
+P1=0xD0 ; // LED will be flashed in 0000 0000 
+delay(10000); 
+for(i=0;i<5;i++){ 
+P1=P1>>1;
+delay(10000) ; // LED will be flashed in 1000 0000 
+} 
+for (i=0;i<5;i++){ 
+P1=P1<<1; 
+delay(10000); 
+} 
+} 
+}
+
