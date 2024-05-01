@@ -1,0 +1,27 @@
+#include<reg51.h> // Include the header file for 8051 microcontroller
+void delay() // Function to create a delay
+{
+TMOD = 0x01; // Configure Timer 0 in mode 1 (16-bit timer mode)
+TL0 = 0x00; // Set the low byte of Timer 0 initial value
+TH0 = 0x00; // Set the high byte of Timer 0 initial value
+TR0 = 1; // Start Timer 0
+// Wait until Timer 0 overflows
+while (TF0 == 0); // Wait for the overflow flag of Timer 0 to be set
+TR0 = 0; // Stop Timer 0
+TF0 = 0; // Clear Timer 0 overflow flag
+}
+void main()
+{
+// Infinite loop
+while (1)
+{
+P0 = 0x55; // Set alternate pins of Port 0 to high (10101010 in binary)
+delay(); // Call delay function
+delay();
+
+P0 = 0xAA; // Set alternate pins of Port 0 to low (01010101 in binary)
+delay(); // Call delay function
+delay();
+
+}
+}
