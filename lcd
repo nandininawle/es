@@ -1,0 +1,59 @@
+
+#include <reg51.h>
+sbit rs=P3^2;
+sbit en=P3^3;
+
+void lcd_delay(unsigned int time){
+unsigned int i,j;
+for(i=0;i<275;i++);
+for(j=0;j<time;j++);
+}
+
+void lcd_cmd(unsigned int command){
+rs=0;
+P0=command;
+en=1;
+lcd_delay(40);
+en=0;
+}
+void lcd_data(unsigned char dat){
+rs=1;
+P0=dat;
+en=1;
+lcd_delay(40);
+en=0;
+}
+void lcd_init(void){
+lcd_cmd(0x01);
+lcd_delay(40);
+lcd_cmd(0x0E);
+lcd_delay(40);
+lcd_cmd(0x38);
+lcd_delay(40);
+}
+void disp_string(unsigned char ptr[]){
+unsigned char i=0;
+while(ptr[i]!='\0'){
+lcd_data(ptr[i]);
+lcd_delay(40);
+i++;
+}
+}
+
+
+
+void main(){
+unsigned char msg1[]="Tanishqa" , msg2[]="Aditi";
+lcd_init();
+
+lcd_cmd(0x80);
+lcd_delay(40);
+disp_string(msg1);
+lcd_delay(40);
+
+lcd_cmd(0xC4);
+lcd_delay(40);
+disp_string(msg2);
+lcd_delay(40);
+while(1);
+}
