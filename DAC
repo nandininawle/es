@@ -1,0 +1,76 @@
+//2step
+#include <reg51.h> 
+void delay(unsigned int time) { 
+unsigned int i; 
+for(i=0;i<time;i++); 
+} 
+void main() 
+{ 
+int i,j; 
+while(1) 
+{ 
+for(i=0;i<=255;i=i+127) 
+{ 
+P0=i; 
+delay(80000); 
+} 
+for(j=254;j>=0;j=j-127) 
+{ 
+P0=j;
+delay(80000); 
+} 
+} 
+} 
+//Pattern 4 : five step wave 
+#include <reg51.h> 
+void delay(unsigned int time) { 
+unsigned int i; 
+for(i=0;i<time;i++); 
+} 
+void main() 
+{ 
+int i,j; 
+while(1) 
+{ 
+for(i=0;i<=255;i=i+64) 
+{ 
+P0=i; 
+delay(80000); 
+} 
+for(j=254;j>=0;j=j-64) 
+{ 
+P0=j; 
+delay(80000); 
+} 
+} 
+} 
+//saw tooth
+#include <reg51.h> 
+void main() 
+{
+unsigned char i; 
+while(1) 
+{ 
+for(i=0;i<255;i++) 
+{ 
+P0=i; 
+} 
+} 
+} 
+//Pattern 2: triangular wave 
+#include <reg51.h> 
+void main() 
+{ 
+int i; 
+while(1) 
+{ 
+for(i=0;i<256;i++) 
+{ 
+P0=i; 
+} 
+for(i=254;i>0;i--) 
+{ 
+P0=i; 
+} 
+} 
+} 
