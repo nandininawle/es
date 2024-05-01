@@ -1,0 +1,67 @@
+#include<reg51.h>
+
+// Define ADC port and LED port
+#define ADCPORT P2
+#define LED_PORT P0
+
+// Variable to hold ADC data
+unsigned int adcdata;
+
+// Define control signal pins
+sbit SEL_A = P1^0;
+sbit SEL_B = P1^1;
+sbit SEL_C = P1^2;
+sbit ALE = P1^3;
+sbit START = P1^4;
+sbit EOC = P1^5;
+
+sbit OE = P1^6;
+
+// Delay function
+void delay(unsigned int time) {
+int i, j;
+for(i = 0; i < 100; i++)
+for(j = 0; j < time; j++);
+}
+
+// Function to read ADC
+void ADC_read() {
+// Configure ADC select lines for desired channel
+SEL_A = 0;
+SEL_B = 1;
+SEL_C = 0;
+
+// Enable ADC
+ALE = 1;
+
+// Start ADC conversion
+START = 1;
+
+ALE = 0;
+START = 0;
+
+// Wait until conversion is complete
+while(EOC == 0);
+
+// Enable output
+OE = 1;
+}
+
+void main() {
+// Initialize control signals
+ALE = 0;
+START = 0;
+OE = 0;
+
+while(1) {
+// Read ADC
+ADC_read();
+
+// Output ADC data to LED port
+
+P0 = P2;
+
+// Delay before next reading
+delay(100);
+}
+}
