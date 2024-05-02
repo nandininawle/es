@@ -1,0 +1,40 @@
+#include<reg51.h>
+void main(void)
+{
+unsigned char i=0,s[20]="Nandini Harshali"; // Initialize a character array with a string
+TMOD=0x20; // Timer 1 mode setting
+TH1 = 0xFD; // Set Timer 1 reload value for baud rate
+SCON = 0x50; // Set serial control register for serial communication
+TR1= 1; // Start Timer 1
+while(1)
+{
+while(s[i]!='\0') // Loop through each character of the string until NULL character
+{
+SBUF=s[i]; // Load character to be transmitted into the serial buffer
+while(TI==0); // Wait until transmission is complete
+TI=0; // Clear transmission flag
+i++; // Move to the next character in the string
+}
+}
+}
+
+Code
+#include<reg51.h>
+void main(void)
+{
+unsigned char i=0,serial_data;
+TMOD=0x20; // Timer 1 mode setting
+TH1 = 0xFD; // Set Timer 1 reload value for baud rate
+SCON = 0x50; // Set serial control register for serial communication
+TR1= 1; // Start Timer 1
+while(1)
+
+{
+while(!RI); // Wait until receive flag is set
+serial_data=SBUF; // Read received data from serial buffer
+RI=0; // Clear receive flag
+SBUF=serial_data; // Echo back received data
+while(TI==0); // Wait until transmission is complete
+TI=0; // Clear transmission flag
+}
+}
